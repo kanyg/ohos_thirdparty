@@ -1,0 +1,56 @@
+import("//build/ohos.gni")
+
+config("libpcap_config") {
+    visibility = [":*"]
+    include_dirs = [
+        "//third_party/libpcap/build",
+        "//third_party/libpcap",
+    ]
+}
+
+config("libpcap_cflags_config") {
+     cflags = [
+        "-O3",
+        "-DNDEBUG",
+        "-fPIC",
+        "-std=gnu99",
+        "-fvisibility=hidden",
+        "-Wno-implicit-fallthrough",
+        "-Wno-int-conversion",
+    ]
+
+    ldflags = [
+        "-lssl",
+        "-lcrypto",
+    ]
+}
+
+ohos_shared_library("libpcap") {
+    sources = [
+        "//third_party/libpcap/bpf_dump.c",
+        "//third_party/libpcap/bpf_filter.c",
+        "//third_party/libpcap/bpf_image.c",
+        "//third_party/libpcap/etherent.c",
+        "//third_party/libpcap/fad-getad.c",
+        "//third_party/libpcap/fmtutils.c",
+        "//third_party/libpcap/gencode.c",
+        "//third_party/libpcap/build/grammar.c",
+        "//third_party/libpcap/nametoaddr.c",
+        "//third_party/libpcap/optimize.c",
+        "//third_party/libpcap/pcap-common.c",
+        "//third_party/libpcap/pcap.c",
+        "//third_party/libpcap/savefile.c",
+        "//third_party/libpcap/build/scanner.c",
+        "//third_party/libpcap/sf-pcap.c",
+        "//third_party/libpcap/sf-pcapng.c",
+    ]
+
+    public_configs = [":libpcap_config"]
+    configs = [":libpcap_cflags_config"]
+
+    defines = [
+        "HAVE_CONFIG_H",
+        "BUILDING_PCAP",
+        "pcap_EXPORTS",
+    ]
+}
