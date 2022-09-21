@@ -3,46 +3,54 @@ import("//build/ohos.gni")
 config("libpcap_config") {
     visibility = [":*"]
     include_dirs = [
-        "//third_party/libpcap/build",
-        "//third_party/libpcap",
+        ".",
+        "./src/pcap/bpf.h",
+        "./src/pcap/can_socketcan.h",
+        "./src/pcap/compiler-tests.h",
+        "./src/pcap/dlt.h",
+        "./src/pcap/funcattrs.h",
+        "./src/pcap/ipnet.h",
+        "./src/pcap/namedb.h",
+        "./src/pcap/nflog.h",
+        "./src/pcap/pcap.h",
+        "./src/pcap/pcap-inttypes.h",
+        "./src/pcap/sll.h",
+        "./src/pcap/socket.h",
+        "./src/pcap/usb.h",
     ]
 }
 
 config("libpcap_cflags_config") {
      cflags = [
-        "-O3",
-        "-DNDEBUG",
-        "-fPIC",
-        "-std=gnu99",
-        "-fvisibility=hidden",
+        # "-O3",
+        # "-DNDEBUG",
+        # "-fPIC",
+        # "-std=gnu99",
+        # "-fvisibility=hidden",
         "-Wno-implicit-fallthrough",
         "-Wno-int-conversion",
-    ]
-
-    ldflags = [
-        "-lssl",
-        "-lcrypto",
     ]
 }
 
 ohos_shared_library("libpcap") {
     sources = [
-        "//third_party/libpcap/bpf_dump.c",
-        "//third_party/libpcap/bpf_filter.c",
-        "//third_party/libpcap/bpf_image.c",
-        "//third_party/libpcap/etherent.c",
-        "//third_party/libpcap/fad-getad.c",
-        "//third_party/libpcap/fmtutils.c",
-        "//third_party/libpcap/gencode.c",
-        "//third_party/libpcap/build/grammar.c",
-        "//third_party/libpcap/nametoaddr.c",
-        "//third_party/libpcap/optimize.c",
-        "//third_party/libpcap/pcap-common.c",
-        "//third_party/libpcap/pcap.c",
-        "//third_party/libpcap/savefile.c",
-        "//third_party/libpcap/build/scanner.c",
-        "//third_party/libpcap/sf-pcap.c",
-        "//third_party/libpcap/sf-pcapng.c",
+        "./src/bpf_dump.c",
+        "./src/bpf_filter.c",
+        "./src/bpf_image.c",
+        "./src/etherent.c",
+        "./src/fad-getad.c",
+        "./src/fmtutils.c",
+        "./src/gencode.c",
+        "./src/build/grammar.c",
+        "./src/nametoaddr.c",
+        "./src/optimize.c",
+        "./src/pcap-common.c",
+        "./src/pcap.c",
+        "./src/savefile.c",
+        "./src/build/scanner.c",
+        "./src/sf-pcap.c",
+        "./src/sf-pcapng.c",
+        "./src/pcap-null.c",
     ]
 
     public_configs = [":libpcap_config"]
